@@ -18,6 +18,10 @@ public:
     // Функция swap с использованием std::lock
     void swapWithLock(Data& other) {
         std::lock(dataMutex, other.dataMutex);
+
+        std::lock_guard<std::mutex> lockThis(dataMutex, std::adopt_lock); 
+        std::lock_guard<std::mutex> lockOther(other.dataMutex, std::adopt_lock);
+
         swap(*this, other);
     }
 

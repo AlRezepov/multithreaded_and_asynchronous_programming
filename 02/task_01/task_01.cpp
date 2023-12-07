@@ -8,6 +8,7 @@ void client(std::atomic<int>& count, int& count_max) {
     while (count.load(std::memory_order_relaxed) <= count_max)
     {
         std::this_thread::sleep_for(std::chrono::seconds(1));
+
         count.fetch_add(1, std::memory_order_relaxed);
         std::cout << "Client: " << count << std::endl;
     }
