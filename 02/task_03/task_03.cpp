@@ -33,10 +33,11 @@ public:
 
     // Функция swap с использованием std::unique_lock
     void swapWithUniqueLock(Data& other) {
-        std::lock(dataMutex, other.dataMutex);
 
-        std::unique_lock<std::mutex> lockThis(dataMutex, std::adopt_lock);
-        std::unique_lock<std::mutex> lockOther(other.dataMutex, std::adopt_lock);
+        std::unique_lock<std::mutex> lockThis(dataMutex, std::defer_lock);
+        std::unique_lock<std::mutex> lockOther(other.dataMutex, std::defer_lock);
+
+        std::lock(lockThis, lockOther);
 
         swap(*this, other);
     }
@@ -54,9 +55,9 @@ int main() {
     data1.printData();
     data2.printData();
 
-    data1.swapWithLock(data2);
+    //data1.swapWithLock(data2);
     //data1.swapWithScopedLock(data2);
-    //data1.swapWithUniqueLock(data2);
+    data1.swapWithUniqueLock(data2);
 
     std::cout << "\nAfter swap:\n";
     data1.printData();

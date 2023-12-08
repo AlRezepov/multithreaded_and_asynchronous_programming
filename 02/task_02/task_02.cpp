@@ -12,7 +12,7 @@ void draw_progress_bar(int thread_number, int progress_bar_size) {
 
     for (int i = 0; i <= progress_bar_size; i++) {
         {
-            std::this_thread::sleep_for(std::chrono::milliseconds(100));
+            std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 500));
             std::lock_guard<std::mutex> lk(mutex);
 
             // Перемещаем курсор к началу нужной строки
@@ -35,7 +35,7 @@ void draw_progress_bar(int thread_number, int progress_bar_size) {
             }
             std::cout << std::flush; // Сбрасываем буфер вывода
         }
-        std::this_thread::sleep_for(std::chrono::milliseconds(100));
+        std::this_thread::sleep_for(std::chrono::milliseconds(std::rand() % 500));
     }
 
     std::cout << std::endl;
@@ -44,7 +44,7 @@ void draw_progress_bar(int thread_number, int progress_bar_size) {
 int main() {
     
     std::vector<std::thread> th;
-    int numThreads = 8;
+    int numThreads = 5;
     int progress_bar_size = 10;
 
     std::cout << "#\t" << "id\t" << "Progress Bar\t" << "Time" << std::endl;
